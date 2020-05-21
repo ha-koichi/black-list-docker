@@ -1,0 +1,12 @@
+version: '3'
+services:
+  app:
+    build: ./
+    volumes:
+      - ./black-list:/app
+    ports:
+      - 80:80
+    command: yarn run dev
+    stdin_open: true
+    tty: true
+
