@@ -44,7 +44,20 @@
 </template>
 
 <script>
+import firebase from '@/plugins/firebase'
+
 export default {
-  layout: 'common'
+  layout: 'common',
+  asyncData (context) {
+    const db = firebase.firestore()
+    let companiesRef = db.collection('companies');
+    let allCompanies = companiesRef
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.id, '=>', doc.data());
+        });
+      })
+  }
 }
 </script>

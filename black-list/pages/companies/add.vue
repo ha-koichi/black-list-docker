@@ -7,6 +7,7 @@
           class="input"
           type="text"
           placeholder="社名を入力してください"
+          v-model="company.name"
         />
       </div>
     </div>
@@ -15,7 +16,7 @@
       <label class="label">業種</label>
       <div class="control">
         <div class="select">
-          <select>
+          <select v-model="company.industry">
             <option v-for="(industry, key) in industries" :key="key">
               {{ industry }}
             </option>
@@ -30,6 +31,7 @@
           class="input"
           type="text"
           placeholder="所在地を入力してください"
+          v-model="company.location"
         />
       </div>
     </div>
@@ -40,6 +42,7 @@
           class="input"
           type="text"
           placeholder="HPのURLを入力してください"
+          v-model="company.url"
         />
       </div>
     </div>
@@ -50,17 +53,34 @@
           class="input"
           type="text"
           placeholder="代表者の氏名を入力してください"
+          v-model="company.employer"
         />
       </div>
     </div>
+    <button
+      class="button is-outlined"
+      type="button"
+      @click="submit"
+    >
+      登録
+    </button>
   </div>
 </template>
 
 <script>
+import firebase from '@/plugins/firebase'
+
 export default {
   layout: 'common',
   data() {
     return {
+      company: {
+        name: '',
+        industry: '',
+        location: '',
+        url: '',
+        employer: ''
+      },
       industries: [
         '農業・林業',
         '漁業',
@@ -83,6 +103,23 @@ export default {
         '公務（他に分類されるものを除く）',
         '分類不能の産業'
       ]
+    }
+  },
+  methods: {
+    submit () {
+      const db = firebase.firestore()
+      let dbCompany = db.collection('companies')
+      dbCompany
+        .add({
+          name: this.company.name,
+          industry: this.company.industry,
+          location: this.company.location,
+          url: this.company.url,
+          employer: this.company.employer,
+        })
+        .then(ref => {
+          console.log('Add ID: ', ref.id)
+        })
     }
   }
 }

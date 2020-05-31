@@ -1,6 +1,6 @@
 # black-list
 
-> My ace Nuxt.js project
+> My amazing Nuxt.js project
 
 ## Build Setup
 

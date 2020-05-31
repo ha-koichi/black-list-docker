@@ -19,3 +19,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.siteContent {
+  margin: 20px
+}
+</style>
